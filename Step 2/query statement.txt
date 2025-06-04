@@ -1,0 +1,186 @@
+CREATE TYPE DateDom142
+	FROM DATE NULL
+go
+
+CREATE TYPE MoneyDom142
+	FROM MONEY NULL
+go
+
+CREATE TABLE Driver
+( 
+	DriverID             char(4)  NOT NULL ,
+	Name                 char(15)  NULL ,
+	Salary               MoneyDom142 ,
+	StartDate            DateDom142 ,
+	Status               char(10)  NULL ,
+	PRIMARY KEY  CLUSTERED (DriverID ASC)
+)
+go
+
+CREATE TABLE Truck
+( 
+	TruckID              char(5)  NOT NULL ,
+	Description          char(10)  NULL ,
+	DatePurchased        DateDom142 ,
+	PRIMARY KEY  CLUSTERED (TruckID ASC)
+)
+go
+
+CREATE TABLE Trip
+( 
+	TripID               char(4)  NOT NULL ,
+	DriverID             char(4)  NULL ,
+	TruckID              char(5)  NULL ,
+	Date                 DateDom142 ,
+	OutGoingMiles        int  NULL ,
+	IncomingMiles        int  NULL ,
+	PRIMARY KEY  CLUSTERED (TripID ASC),
+	 FOREIGN KEY (DriverID) REFERENCES Driver(DriverID),
+	 FOREIGN KEY (TruckID) REFERENCES Truck(TruckID)
+)
+go
+
+CREATE TABLE Expense
+( 
+	TripID               char(4)  NOT NULL ,
+	ExpenseNumber        int  NOT NULL ,
+	Date                 DateDom142 ,
+	ExpenseType          char(1)  NULL ,
+	PRIMARY KEY  CLUSTERED (TripID ASC,ExpenseNumber ASC),
+	 FOREIGN KEY (TripID) REFERENCES Trip(TripID)
+)
+go
+
+CREATE TABLE RoadExpenses
+( 
+	TripID               char(4)  NOT NULL ,
+	ExpenseNumber        int  NOT NULL ,
+	FuelGallons          int  NULL ,
+	FuelCost             MoneyDom142 ,
+	PRIMARY KEY  CLUSTERED (TripID ASC,ExpenseNumber ASC),
+	 FOREIGN KEY (TripID,ExpenseNumber) REFERENCES Expense(TripID,ExpenseNumber)
+)
+go
+
+CREATE TABLE Maintenance
+( 
+	OrderNumber          int  NOT NULL ,
+	TruckID              char(5)  NULL ,
+	RepairType           char(15)  NULL ,
+	RepairDate           DateDom142 ,
+	PRIMARY KEY  CLUSTERED (OrderNumber ASC),
+	 FOREIGN KEY (TruckID) REFERENCES Truck(TruckID)
+)
+go
+
+CREATE TABLE LivingExpenses
+( 
+	TripID               char(4)  NOT NULL ,
+	ExpenseNumber        int  NOT NULL ,
+	Description          char(10)  NULL ,
+	Amount               MoneyDom142 ,
+	PRIMARY KEY  CLUSTERED (TripID ASC,ExpenseNumber ASC),
+	 FOREIGN KEY (TripID,ExpenseNumber) REFERENCES Expense(TripID,ExpenseNumber)
+)
+go
+
+
+
+#################To delete database: 
+USE master;
+ALTER DATABASE KOT142 SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+DROP DATABASE KOT142 ;
+
+
+
+####################################################updated with char(20) for name 
+
+CREATE TYPE DateDom142
+	FROM DATE NULL
+go
+
+CREATE TYPE MoneyDom142
+	FROM MONEY NULL
+go
+
+CREATE TABLE Driver
+( 
+	DriverID             char(4)  NOT NULL ,
+	Name                 char(20)  NULL ,
+	Salary               MoneyDom142 ,
+	StartDate            DateDom142 ,
+	Status               char(10)  NULL ,
+	PRIMARY KEY  CLUSTERED (DriverID ASC)
+)
+go
+
+CREATE TABLE Truck
+( 
+	TruckID              char(5)  NOT NULL ,
+	Description          char(10)  NULL ,
+	DatePurchased        DateDom142 ,
+	PRIMARY KEY  CLUSTERED (TruckID ASC)
+)
+go
+
+CREATE TABLE Trip
+( 
+	TripID               char(4)  NOT NULL ,
+	DriverID             char(4)  NULL ,
+	TruckID              char(5)  NULL ,
+	Date                 DateDom142 ,
+	OutGoingMiles        int  NULL ,
+	IncomingMiles        int  NULL ,
+	PRIMARY KEY  CLUSTERED (TripID ASC),
+	 FOREIGN KEY (DriverID) REFERENCES Driver(DriverID),
+	 FOREIGN KEY (TruckID) REFERENCES Truck(TruckID)
+)
+go
+
+CREATE TABLE Expense
+( 
+	TripID               char(4)  NOT NULL ,
+	ExpenseNumber        int  NOT NULL ,
+	Date                 DateDom142 ,
+	ExpenseType          char(1)  NULL ,
+	PRIMARY KEY  CLUSTERED (TripID ASC,ExpenseNumber ASC),
+	 FOREIGN KEY (TripID) REFERENCES Trip(TripID)
+)
+go
+
+CREATE TABLE RoadExpenses
+( 
+	TripID               char(4)  NOT NULL ,
+	ExpenseNumber        int  NOT NULL ,
+	FuelGallons          int  NULL ,
+	FuelCost             MoneyDom142 ,
+	PRIMARY KEY  CLUSTERED (TripID ASC,ExpenseNumber ASC),
+	 FOREIGN KEY (TripID,ExpenseNumber) REFERENCES Expense(TripID,ExpenseNumber)
+)
+go
+
+CREATE TABLE Maintenance
+( 
+	OrderNumber          int  NOT NULL ,
+	TruckID              char(5)  NULL ,
+	RepairType           char(15)  NULL ,
+	RepairDate           DateDom142 ,
+	PRIMARY KEY  CLUSTERED (OrderNumber ASC),
+	 FOREIGN KEY (TruckID) REFERENCES Truck(TruckID)
+)
+go
+
+CREATE TABLE LivingExpenses
+( 
+	TripID               char(4)  NOT NULL ,
+	ExpenseNumber        int  NOT NULL ,
+	Description          char(10)  NULL ,
+	Amount               MoneyDom142 ,
+	PRIMARY KEY  CLUSTERED (TripID ASC,ExpenseNumber ASC),
+	 FOREIGN KEY (TripID,ExpenseNumber) REFERENCES Expense(TripID,ExpenseNumber)
+)
+go
+
+
+
+
