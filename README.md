@@ -48,7 +48,7 @@ Both models ensure a clean transition from conceptual planning to practical data
 - Defined custom data types for dates and monetary values
 - Created normalized tables for drivers, trucks, trips, expenses, and maintenance records
 - Established relationships using primary and foreign keys
-
+![Example: Table Creation](https://github.com/VaishnaviApsingkar/Truckmaster_DB/blob/main/images/Step2_creating_data.png)
 ### ✅ Step 2: Data Entry and Testing
 - Loaded sample data via Excel files
 - Validated data types, relational integrity, and formatting
